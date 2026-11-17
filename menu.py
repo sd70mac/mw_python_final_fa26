@@ -26,6 +26,7 @@ def __init__(self, menu_file):
     self.__menu = {}
     self.read_menu()
 
+
 def get_menu(self):
     """Get the menu dictionary.
     :return: The menu dictionary."""
@@ -43,6 +44,7 @@ def get_menu_file(self):
     :return: The menu file path."""
     return self.__menu_file
 
+
 # Not fully safe, because the dictionary is not checked for validity.
 def set_menu_file(self, menu_file):
     """Set the menu file path.
@@ -54,7 +56,7 @@ def menu_summary(self):
     """
     Display each menu category and its comma-separated items.
     """
-    for category, details in self.__menu
+    for category, details in self.__menu.items():
         print(f"\n{category}:")
         for item in details:
             print(f"\t{item}")

@@ -12,13 +12,15 @@ def main():
     """
     Main function to run the Pie in the Sky order process.
     No parameters are passed to this function, and it does not return any values."""
-    clear_screen()
-    customer_info = get_customer_info()
+    pie_in_the_sky.clear_screen()
+    customer_info = pie_in_the_sky.get_customer_info()
     print(f"Welcome To Pie In The Sky, {customer_info['name']}!")
-    past_orders = get_past_orders(customer_info=customer_info)
-    show_past_orders(past_orders=past_orders)
+    customer_info = pie_in_the_sky.get_customer_info()
+    past_orders = pie_in_the_sky.get_past_orders(customer_info=customer_info)
+    pie_in_the_sky.show_past_orders(past_orders=past_orders)
     order = (
-        select_past_order(past_orders=past_orders) or get_order()
+        pie_in_the_sky.select_past_order(past_orders=past_orders)
+        or pie_in_the_sky.get_order()
     )  # adding the 'or get_order()' fixed order.extend(selected_items) [Currently line 109]
 
     """ for category in CATEGORIES:
@@ -36,8 +38,8 @@ def main():
     food_menu.menu_summary()
     dessert_menu.menu_summary()
 
-    total = calculate_bill(order=order)
-    print_bill(order=order, total=total)
+    total = pie_in_the_sky.calculate_bill(order=order)
+    pie_in_the_sky.print_bill(order=order, total=total)
 
 
 ## Run the main function when the file is executed
