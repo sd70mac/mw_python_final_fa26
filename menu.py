@@ -50,6 +50,18 @@ def set_menu_file(self, menu_file):
     self.__menu_file = menu_file
 
 
+def print_menu(menu_items):
+    """
+    Display each menu category and its comma-separated items.
+    :param menu_items: Dictionary containing menu categories and their details.
+    """
+    for category, details in menu_items.items():
+        print(f"\n{category}:")
+        details = details.split(",")
+        for item in details:
+            print(f"\t{item.strip()}")
+
+
 def read_menu(self):
     """Read each category and its details from the menu configuration file."""
     # menu = {}
@@ -59,7 +71,12 @@ def read_menu(self):
             for line in file:
                 try:
                     category, details = line.strip().split(":", 1)
-                    self.__menu[category.strip()] = details.strip()
+                    category = category.strip()
+                    details = details.split(",")
+                    for item in details:
+                        item = item.strip()
+                    self.__menu[category] = details
+
                 except IndexError:
                     pass  # This handles blank lines in the text file
 
