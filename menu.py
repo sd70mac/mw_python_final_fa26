@@ -28,21 +28,20 @@ def __init__(self, menu_file):
 
 def read_menu(self):
     """Read each category and its details from the menu configuration file."""
-    menus = {}
+    # menu = {}
 
     try:
         with open(self.__menu_file, "r") as file:
             for line in file:
                 category, details = line.strip().split(":", 1)
-                menus[category.strip()] = details.strip()
+                self.__menu[category.strip()] = details.strip()
 
-        return menus
     except FileNotFoundError:
         print(
             f'Could not find "{self.__menu_file}". Please create it or check its name.'
         )
         print("Press enter or any other key to exit.")
     except IndexError:
-        return menus  # This handles blank lines in the text file
+        pass  # This handles blank lines in the text file
     except Exception as e:
         print(e)
