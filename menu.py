@@ -43,6 +43,5 @@ def read_menu(self):
         print(
             f'Could not find "{self.__menu_file}". Please create it or check its name.'
         )
-        print("Press enter or any other key to exit.")
     except Exception as e:
         print(e)
