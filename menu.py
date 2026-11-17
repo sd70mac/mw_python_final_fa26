@@ -11,6 +11,7 @@ ASSIGNMENT 14A: Object practice
 -----------------------------------------------------------------------
 """
 
+
 # Will rename this file once I have a better idea of what to call it. For now, this is just a placeholder for the assignment.
 # Defining a menu category.
 class Menu:
@@ -18,3 +19,7 @@ class Menu:
 
 
 # Code to read in a whole category of items from the menu file, which will normally be a whole line from the file.
+def __init__(self, menu_file):
+    """Initialize the Menu class with the menu file.
+    :param menu_file: The path to the menu file."""
+    self.__menu_file = menu_file
