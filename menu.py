@@ -38,13 +38,13 @@ def read_menu(self):
                     self.__menu[category.strip()] = details.strip()
                 except ValueError:
                     pass  # This handles lines that don't have the expected format
+                except IndexError:
+                    pass  # This handles blank lines in the text file
 
     except FileNotFoundError:
         print(
             f'Could not find "{self.__menu_file}". Please create it or check its name.'
         )
         print("Press enter or any other key to exit.")
-    except IndexError:
-        pass  # This handles blank lines in the text file
     except Exception as e:
         print(e)
