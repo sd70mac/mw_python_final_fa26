@@ -24,6 +24,7 @@ def __init__(self, menu_file):
     :param menu_file: The path to the menu file."""
     self.__menu_file = menu_file
     self.__menu = {}
+    self.read_menu()
 
 def get_menu(self):
     """Get the menu dictionary.
