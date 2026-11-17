@@ -36,8 +36,6 @@ def read_menu(self):
                 try:
                     category, details = line.strip().split(":", 1)
                     self.__menu[category.strip()] = details.strip()
-                except ValueError:
-                    pass  # This handles lines that don't have the expected format
                 except IndexError:
                     pass  # This handles blank lines in the text file
 
