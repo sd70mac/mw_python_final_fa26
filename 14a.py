@@ -10,4 +10,6 @@ ASSIGNMENT 14A: Object practice
 [ ] 6. Instantiate two distinct objects and print their summaries.
 -----------------------------------------------------------------------
 """
-#Will rename this file once I have a better idea of what to call it. For now, this is just a placeholder for the assignment.
+
+# Will rename this file once I have a better idea of what to call it. For now, this is just a placeholder for the assignment.
+# Defining a menu.
