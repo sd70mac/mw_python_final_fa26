@@ -3,6 +3,7 @@
 import os
 import sys
 import pie_in_the_sky
+import menu
 
 
 # I hope I'm doing this right.
