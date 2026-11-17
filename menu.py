@@ -13,4 +13,8 @@ ASSIGNMENT 14A: Object practice
 
 # Will rename this file once I have a better idea of what to call it. For now, this is just a placeholder for the assignment.
 # Defining a menu category.
+class Menu:
+    """A class to represent the menu."""
+
+
 # Code to read in a whole category of items from the menu file, which will normally be a whole line from the file.

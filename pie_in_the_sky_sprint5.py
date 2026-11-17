@@ -40,6 +40,7 @@ def get_available_items(category):
     """Read the menu file and return a list of available items for the given category.
     :param category: The category of items to retrieve.
     :return: A list of available items for the given category."""
+    # Refactoring as a shell function that will call the Menu class.
     # 💡 TODO: Revise actual implementation, functional but not final.
     try:
         with open(MENU_FILE, "r") as menu_file:
