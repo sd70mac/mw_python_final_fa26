@@ -33,8 +33,11 @@ def read_menu(self):
     try:
         with open(self.__menu_file, "r") as file:
             for line in file:
-                category, details = line.strip().split(":", 1)
-                self.__menu[category.strip()] = details.strip()
+                try:
+                    category, details = line.strip().split(":", 1)
+                    self.__menu[category.strip()] = details.strip()
+                except ValueError:
+                    pass  # This handles lines that don't have the expected format
 
     except FileNotFoundError:
         print(
