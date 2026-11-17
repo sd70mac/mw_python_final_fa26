@@ -30,6 +30,7 @@ class Menu:
         :return: The menu dictionary."""
         return self.__menu
 
+    # Not fully safe, because the dictionary is not checked for validity.
     def set_menu(self, menu):
         """Set the menu dictionary.
         :param menu: The menu dictionary to set."""
@@ -40,11 +41,12 @@ class Menu:
         :return: The menu file path."""
         return self.__menu_file
 
-    # Not fully safe, because the dictionary is not checked for validity.
     def set_menu_file(self, menu_file):
         """Set the menu file path.
         :param menu_file: The menu file path to set."""
         self.__menu_file = menu_file
+        self.__menu = {}
+        self.read_menu()
 
     def menu_summary(self):
         """

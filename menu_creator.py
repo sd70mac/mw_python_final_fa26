@@ -26,4 +26,5 @@ def main():
     save_to_file(my_menu)
 
 
-main()
+if __name__ == "__main__":
+    main()

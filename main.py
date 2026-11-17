@@ -15,7 +15,6 @@ def main():
     pie_in_the_sky.clear_screen()
     customer_info = pie_in_the_sky.get_customer_info()
     print(f"Welcome To Pie In The Sky, {customer_info['name']}!")
-    customer_info = pie_in_the_sky.get_customer_info()
     past_orders = pie_in_the_sky.get_past_orders(customer_info=customer_info)
     pie_in_the_sky.show_past_orders(past_orders=past_orders)
     order = (
@@ -43,4 +42,5 @@ def main():
 
 
 ## Run the main function when the file is executed
-main()
+if __name__ == "__main__":
+    main()

@@ -55,4 +55,5 @@ def main():
 
 
 ## Run the main function when the file is executed
-main()
+if __name__ == "__main__":
+    main()
