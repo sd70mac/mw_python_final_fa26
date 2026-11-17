@@ -23,6 +23,7 @@ def __init__(self, menu_file):
     """Initialize the Menu class with the menu file.
     :param menu_file: The path to the menu file."""
     self.__menu_file = menu_file
+    self.__menu = {}
 
 
 def read_menu(self):
@@ -34,6 +35,7 @@ def read_menu(self):
             for line in file:
                 category, details = line.strip().split(":", 1)
                 menus[category.strip()] = details.strip()
+
         return menus
     except FileNotFoundError:
         print(
