@@ -26,6 +26,18 @@ def __init__(self, menu_file):
     self.__menu = {}
 
 
+def get_menu(self):
+    """Get the menu dictionary.
+    :return: The menu dictionary."""
+    return self.__menu
+
+
+def set_menu(self, menu):
+    """Set the menu dictionary.
+    :param menu: The menu dictionary to set."""
+    self.__menu = menu
+
+
 def read_menu(self):
     """Read each category and its details from the menu configuration file."""
     # menu = {}
