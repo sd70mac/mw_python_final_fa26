@@ -21,13 +21,20 @@ def main():
         select_past_order(past_orders=past_orders) or get_order()
     )  # adding the 'or get_order()' fixed order.extend(selected_items) [Currently line 109]
 
-    for category in CATEGORIES:
+    """ for category in CATEGORIES:
         available_items = get_available_items(category=category)
         selected_items = get_items_for_category(
             category=category, available_items=available_items
         )
         order.extend(selected_items)  # I have read about combining lists before.
         # Handy link: https://www.w3schools.com/python/ref_list_extend.asp
+ """
+
+    food_menu = menu.Menu("menu.txt")
+    dessert_menu = menu.Menu("dessert_menu.txt")
+
+    food_menu.menu_summary()
+    dessert_menu.menu_summary()
 
     total = calculate_bill(order=order)
     print_bill(order=order, total=total)
