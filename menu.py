@@ -25,7 +25,6 @@ def __init__(self, menu_file):
     self.__menu_file = menu_file
     self.__menu = {}
 
-
 def get_menu(self):
     """Get the menu dictionary.
     :return: The menu dictionary."""
@@ -43,7 +42,7 @@ def get_menu_file(self):
     :return: The menu file path."""
     return self.__menu_file
 
-
+# Not fully safe, because the dictionary is not checked for validity.
 def set_menu_file(self, menu_file):
     """Set the menu file path.
     :param menu_file: The menu file path to set."""
