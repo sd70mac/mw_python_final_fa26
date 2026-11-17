@@ -38,6 +38,18 @@ def set_menu(self, menu):
     self.__menu = menu
 
 
+def get_menu_file(self):
+    """Get the menu file path.
+    :return: The menu file path."""
+    return self.__menu_file
+
+
+def set_menu_file(self, menu_file):
+    """Set the menu file path.
+    :param menu_file: The menu file path to set."""
+    self.__menu_file = menu_file
+
+
 def read_menu(self):
     """Read each category and its details from the menu configuration file."""
     # menu = {}
