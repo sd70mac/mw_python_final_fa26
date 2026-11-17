@@ -52,7 +52,6 @@ def set_menu_file(self, menu_file):
 def menu_summary(self):
     """
     Display each menu category and its comma-separated items.
-    :param self: Dictionary containing menu categories and their details.
     """
     for category, details in self.__menu
         print(f"\n{category}:")
