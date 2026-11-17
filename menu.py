@@ -17,72 +17,65 @@ ASSIGNMENT 14A: Object practice
 class Menu:
     """A class to represent the menu."""
 
+    # Code to read in a whole category of items from the menu file, which will normally be a whole line from the file.
+    def __init__(self, menu_file):
+        """Initialize the Menu class with the menu file.
+        :param menu_file: The path to the menu file."""
+        self.__menu_file = menu_file
+        self.__menu = {}
+        self.read_menu()
 
-# Code to read in a whole category of items from the menu file, which will normally be a whole line from the file.
-def __init__(self, menu_file):
-    """Initialize the Menu class with the menu file.
-    :param menu_file: The path to the menu file."""
-    self.__menu_file = menu_file
-    self.__menu = {}
-    self.read_menu()
+    def get_menu(self):
+        """Get the menu dictionary.
+        :return: The menu dictionary."""
+        return self.__menu
 
+    def set_menu(self, menu):
+        """Set the menu dictionary.
+        :param menu: The menu dictionary to set."""
+        self.__menu = menu
 
-def get_menu(self):
-    """Get the menu dictionary.
-    :return: The menu dictionary."""
-    return self.__menu
+    def get_menu_file(self):
+        """Get the menu file path.
+        :return: The menu file path."""
+        return self.__menu_file
 
+    # Not fully safe, because the dictionary is not checked for validity.
+    def set_menu_file(self, menu_file):
+        """Set the menu file path.
+        :param menu_file: The menu file path to set."""
+        self.__menu_file = menu_file
 
-def set_menu(self, menu):
-    """Set the menu dictionary.
-    :param menu: The menu dictionary to set."""
-    self.__menu = menu
+    def menu_summary(self):
+        """
+        Display each menu category and its comma-separated items.
+        """
+        for category, details in self.__menu.items():
+            print(f"\n{category}:")
+            for item in details:
+                print(f"\t{item}")
 
+    def read_menu(self):
+        """Read each category and its details from the menu configuration file."""
+        # menu = {}
 
-def get_menu_file(self):
-    """Get the menu file path.
-    :return: The menu file path."""
-    return self.__menu_file
+        try:
+            with open(self.__menu_file, "r") as file:
+                for line in file:
+                    try:
+                        category, details = line.strip().split(":", 1)
+                        category = category.strip()
+                        details = details.split(",")
+                        for item in details:
+                            item = item.strip()
+                        self.__menu[category] = details
 
+                    except IndexError:
+                        pass  # This handles blank lines in the text file
 
-# Not fully safe, because the dictionary is not checked for validity.
-def set_menu_file(self, menu_file):
-    """Set the menu file path.
-    :param menu_file: The menu file path to set."""
-    self.__menu_file = menu_file
-
-
-def menu_summary(self):
-    """
-    Display each menu category and its comma-separated items.
-    """
-    for category, details in self.__menu.items():
-        print(f"\n{category}:")
-        for item in details:
-            print(f"\t{item}")
-
-
-def read_menu(self):
-    """Read each category and its details from the menu configuration file."""
-    # menu = {}
-
-    try:
-        with open(self.__menu_file, "r") as file:
-            for line in file:
-                try:
-                    category, details = line.strip().split(":", 1)
-                    category = category.strip()
-                    details = details.split(",")
-                    for item in details:
-                        item = item.strip()
-                    self.__menu[category] = details
-
-                except IndexError:
-                    pass  # This handles blank lines in the text file
-
-    except FileNotFoundError:
-        print(
-            f'Could not find "{self.__menu_file}". Please create it or check its name.'
-        )
-    except Exception as e:
-        print(e)
+        except FileNotFoundError:
+            print(
+                f'Could not find "{self.__menu_file}". Please create it or check its name.'
+            )
+        except Exception as e:
+            print(e)
