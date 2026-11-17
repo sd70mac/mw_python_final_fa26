@@ -49,10 +49,10 @@ def set_menu_file(self, menu_file):
     self.__menu_file = menu_file
 
 
-def print_menu(self):
+def menu_summary(self):
     """
     Display each menu category and its comma-separated items.
-    :param menu_items: Dictionary containing menu categories and their details.
+    :param self: Dictionary containing menu categories and their details.
     """
     for category, details in self.__menu
         print(f"\n{category}:")
