@@ -16,7 +16,11 @@ class OrderApiTests(unittest.TestCase):
         self.thread = threading.Thread(target=self.server.serve_forever)
         self.thread.start()
         self.original_api_url = api_client.API_URL
+        self.original_supabase_url = api_client._SUPABASE_URL
+        self.original_supabase_key = api_client._SUPABASE_KEY
         api_client.API_URL = f"http://127.0.0.1:{self.server.server_port}"
+        api_client._SUPABASE_URL = ""
+        api_client._SUPABASE_KEY = ""
 
     def tearDown(self):
         self.server.shutdown()
@@ -24,6 +28,8 @@ class OrderApiTests(unittest.TestCase):
         self.server.server_close()
         self.temp_dir.cleanup()
         api_client.API_URL = self.original_api_url
+        api_client._SUPABASE_URL = self.original_supabase_url
+        api_client._SUPABASE_KEY = self.original_supabase_key
 
     def test_api_serves_menu_and_persists_orders_for_both_clients(self):
         menu = api_client.get_menu()

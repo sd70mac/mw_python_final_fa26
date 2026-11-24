@@ -73,8 +73,8 @@ def load_menu(menu_files=MENU_FILES):
     return menu
 
 
-def create_order(customer_name, selected_items, menu, orders_file=ORDERS_FILE):
-    """Validate and persist an order made up of category/item dictionaries."""
+def prepare_order(customer_name, selected_items, menu):
+    """Validate order items and build the record shared by both storage backends."""
     if not isinstance(customer_name, str):
         raise ValueError("Please enter a customer name.")
     customer_name = customer_name.strip()
@@ -129,7 +129,12 @@ def create_order(customer_name, selected_items, menu, orders_file=ORDERS_FILE):
         "customer_name": customer_name,
         "items": items,
     }
+    return order
 
+
+def create_order(customer_name, selected_items, menu, orders_file=ORDERS_FILE):
+    """Validate and persist an order made up of category/item dictionaries."""
+    order = prepare_order(customer_name, selected_items, menu)
     orders_file = Path(orders_file)
     with _ORDERS_LOCK:
         needs_header = not orders_file.exists() or orders_file.stat().st_size == 0

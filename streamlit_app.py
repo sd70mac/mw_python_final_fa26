@@ -3,16 +3,18 @@
 from collections import Counter
 
 import streamlit as st
+from streamlit.errors import StreamlitSecretNotFoundError
 
-from api_client import get_menu, get_orders, submit_order
+from api_client import configure_supabase, get_menu, get_orders, submit_order
 from restaurant import calculate_order_total, menu_item_details
 
 
 # CHANGE LOG - CLI ordering features moved into the existing API-backed page:
-# - Kept the shared API for menu loading and order persistence.
+# - Uses Supabase for hosted orders and the local API for development.
 # - Replaced the one-item-per-category form with quantity and drink add-on widgets.
-# - Added item prices, tax calculation, saved-order reordering, and an order summary.
+# - Added item prices, tax calculation, and an order summary.
 # - Added menu entries from the CLI project while preserving this repository's items.
+# - Keeps customer order history private to the restaurant console.
 
 BEVERAGES_WITH_ADDONS = {"tea", "coffee", "decaf"}
 
@@ -91,6 +93,23 @@ st.title("Pie in the Sky Ordering Kiosk")
 st.caption("A neighborhood restaurant in Woodstock, Illinois")
 
 try:
+    supabase_url = st.secrets["SUPABASE_URL"]
+    supabase_service_role_key = st.secrets["SUPABASE_SERVICE_ROLE_KEY"]
+except StreamlitSecretNotFoundError:
+    pass
+except KeyError:
+    st.error(
+        "Configure SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY in Streamlit secrets."
+    )
+    st.stop()
+else:
+    try:
+        configure_supabase(supabase_url, supabase_service_role_key)
+    except ValueError as error:
+        st.error(f"Invalid Supabase configuration: {error}")
+        st.stop()
+
+try:
     menu = get_menu()
 except RuntimeError as error:
     st.error(str(error))
@@ -103,11 +122,6 @@ except RuntimeError as error:
     recent_orders = []
 
 customer_name = st.text_input("Your name", value="").strip()
-customer_orders = [
-    order
-    for order in recent_orders
-    if order["customer_name"].casefold() == customer_name.casefold()
-]
 
 with st.expander("View Menu", expanded=False):
     for category, items in menu.items():
@@ -115,25 +129,8 @@ with st.expander("View Menu", expanded=False):
         for item in items:
             st.write(f"- {format_menu_item(item)}")
 
-reorder_options = ["Start a new order"] + [
-    f"Order {order['order_id'][:8]} — "
-    + ", ".join(order_item_label(item) for item in order["items"])
-    for order in customer_orders
-]
-reorder_choice = st.selectbox("Saved orders", reorder_options)
-reordered_items = []
-if reorder_choice != "Start a new order":
-    selected_order_index = reorder_options.index(reorder_choice) - 1
-    reordered_items = customer_orders[selected_order_index]["items"]
-
-if reordered_items:
-    selected_items = reordered_items
-    st.subheader("Reordered Items")
-    for item in selected_items:
-        st.write(f"- {order_item_label(item)}")
-else:
-    st.subheader("Choose Items")
-    selected_items = selected_menu_items(menu)
+st.subheader("Choose Items")
+selected_items = selected_menu_items(menu)
 
 st.subheader("Full Order")
 if selected_items:
@@ -167,19 +164,11 @@ if st.button(
         st.success(f"Order received. Your order number is {order['order_id'][:8]}.")
         st.balloons()
 
-st.subheader("Recent Orders")
-if st.button("Refresh orders"):
-    st.rerun()
-if not recent_orders:
-    st.caption("No orders have been placed yet.")
-for order in recent_orders:
-    item_names = ", ".join(order_item_label(item) for item in order["items"])
-    st.write(
-        f"**{order['customer_name']}** · {item_names}  \n"
-        f"Order {order['order_id'][:8]} · {order['timestamp']}"
-    )
-
 st.subheader("Popular Orders")
+st.caption(
+    "Customer order details are private to the restaurant; only anonymized item "
+    "combinations are shown here."
+)
 popular_orders = popular_order_summaries(recent_orders)
 if not popular_orders:
     st.caption("No popular orders yet.")
