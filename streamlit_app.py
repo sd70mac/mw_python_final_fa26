@@ -12,7 +12,7 @@ from restaurant import calculate_order_total, menu_item_details
 # CHANGE LOG - CLI ordering features moved into the existing API-backed page:
 # - Uses Supabase for hosted orders and the local API for development.
 # - Replaced the one-item-per-category form with quantity and drink add-on widgets.
-# - Added item prices, tax calculation, and an order summary.
+# - Added itemized prices, tax calculation, and an order summary.
 # - Added menu entries from the CLI project while preserving this repository's items.
 # - Keeps customer order history private to the restaurant console.
 
@@ -150,9 +150,21 @@ selected_items = st.session_state["order_cart"]
 
 st.subheader("Full Order")
 if selected_items:
-    order_counts = Counter(order_item_label(item) for item in selected_items)
-    for name, quantity in order_counts.items():
-        st.write(f"- {name}" + (f" × {quantity}" if quantity > 1 else ""))
+    order_lines = Counter(
+        (order_item_label(item), menu_item_details(item["item"])[1])
+        for item in selected_items
+    )
+    for (name, unit_price), quantity in order_lines.items():
+        if unit_price is None:
+            price_text = "price not set"
+        elif quantity > 1:
+            price_text = (
+                f"${unit_price:.2f} each × {quantity} "
+                f"= ${unit_price * quantity:.2f}"
+            )
+        else:
+            price_text = f"${unit_price:.2f}"
+        st.write(f"- {name} — {price_text}")
 else:
     st.info("No items selected yet.")
 
