@@ -1,11 +1,11 @@
 # CHANGE LOG:
 # Retained the original items, added the priced kiosk categories, and assigned prices
 # only where they were specified in the kiosk draft. Legacy unpriced items remain listed.
-PIES : Mince Pie ($12), Custard ($12), Shepherds', Chicken, Beef, Pork, Wild, Fish, Redberry ($12), Apple ($12), Blueberry ($12), Admiral, Garden, Wilder, Summer, Mud
+PIES : Mince Pie ($12), Custard ($12), Shepherds' ($12), Chicken ($12), Beef ($12), Pork ($12), Wild ($12), Fish ($12), Redberry ($12), Apple ($12), Blueberry ($12), Admiral ($12), Garden ($12), Wilder ($12), Summer ($12), Mud ($12)
 PIES : Turkey Pot Pie ($12), Chicken Pot Pie ($12), Quiche ($12)
 APPETIZERS : Bread ($2), Tarts ($2), Crackers ($2)
 OTHER ENTREES : Cornish Pasty ($12), Bierock ($12)
-DRINKS : Lemonade ($2), Tea ($2), Coffee ($2), Coca-Cola ($2), Pepsi ($2), 7-Up, Dr. Pepper, Root Beer, Sprite, Fanta, Chocolate Milk, Decaf ($2), Water ($2)
-SANDWICHES : Ham and Cheese ($8), Chicken Salad, Tuna Salad, Bacon Lettuce Tomato ($8), Ham without Cheese ($8), Turkey with Cheese ($8), Turkey without Cheese ($8), Chicken with Cheese ($8), Chicken without Cheese ($8), Hamburger with Cheese ($8), Hamburger without Cheese ($8), Peanut Butter and Jelly ($5)
-SOUPS : Minestrone Soup ($8), Tomato Soup ($8), Cheddar Potato, Split Pea Soup ($8), Chicken Soup ($8)
+DRINKS : Lemonade ($2), Tea ($2), Coffee ($2), Coca-Cola ($2), Pepsi ($2), 7-Up ($2), Dr. Pepper ($2), Root Beer ($2), Sprite ($2), Fanta ($2), Chocolate Milk ($2), Decaf ($2), Water ($2)
+SANDWICHES : Ham and Cheese ($8), Chicken Salad ($8), Tuna Salad ($8), Bacon Lettuce Tomato ($8), Ham without Cheese ($8), Turkey with Cheese ($8), Turkey without Cheese ($8), Chicken with Cheese ($8), Chicken without Cheese ($8), Hamburger with Cheese ($8), Hamburger without Cheese ($8), Peanut Butter and Jelly ($5)
+SOUPS : Minestrone Soup ($8), Tomato Soup ($8), Cheddar Potato ($8), Split Pea Soup ($8), Chicken Soup ($8)
 PASTAS : Fettuccine Bolognese ($8), Pasta Primavera ($8), Fettuccine with Marinara Sauce ($8), Fettuccine with Marinara Sauce and Meatballs ($8), Fettuccine with White Sauce ($8)
