@@ -23,10 +23,12 @@ CATEGORIES = (
     "Drinks",
     "Desserts",
 )  # I don't know if I actually need this.  I'm keeping it for now. Let me know what you think!
+CENTRAL_TIME = ZoneInfo("America/Chicago")
 
 import os
 import sys
 import datetime
+from zoneinfo import ZoneInfo
 
 # I am going to save splitting things up for the next sprint, as I need more guidance on doing so in a sane fashion that doesn't create chaos and confusion.
 
@@ -143,9 +145,7 @@ def print_bill(order, total):
     """Print the order and its total.
     :param order: A list of ordered items.
     :param total: The total cost of the order."""
-    timestamp = (
-        datetime.datetime.now()
-    )  # I had to move timestamp here because it was being called earlier than it was before.
+    timestamp = datetime.datetime.now(CENTRAL_TIME)
     order_str = f"Order: {order}, Total: ${total:.2f}, Timestamp: {timestamp}\n"
     try:
         with open(RECEIPT_LOG_FILE, "w") as orders:
@@ -167,13 +167,10 @@ def open_order_file(order, total):
     """Open the order file for writing.
     :param order: A list of ordered items.
     :param total: The total cost of the order."""
-    timestamp = (
-        datetime.datetime.now()
-    )  # I had to move timestamp here because it was being called earlier than it was before.
+    timestamp = datetime.datetime.now(CENTRAL_TIME)
     order_str = f"Order: {order}, Total: ${total:.2f}, Timestamp: {timestamp}\n"
     try:
         with open(ORDER_FILE, "a") as orders:
-            timestamp = datetime.datetime.now()
             orders.write(order_str)
             # I will change this later, this is just a demo.
             pass

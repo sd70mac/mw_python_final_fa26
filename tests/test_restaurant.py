@@ -1,14 +1,18 @@
 import csv
 import tempfile
 import unittest
+from datetime import datetime
 from decimal import Decimal
 from pathlib import Path
 
 from restaurant import (
+    CENTRAL_TIME,
     calculate_order_total,
     create_order,
+    format_central_timestamp,
     load_menu,
     read_orders,
+    prepare_order,
 )
 
 
@@ -112,6 +116,26 @@ class RestaurantTests(unittest.TestCase):
                     "addons": ["milk", "sugar"],
                 }
             ],
+        )
+
+    def test_order_timestamps_are_created_in_central_time(self):
+        order = prepare_order(
+            "Casey",
+            [{"category": "PIES", "item": "Apple ($12)"}],
+            {"PIES": ["Apple ($12)"]},
+        )
+
+        timestamp = datetime.fromisoformat(order["timestamp"])
+        self.assertEqual(timestamp.tzinfo, CENTRAL_TIME)
+
+    def test_format_central_timestamp_handles_standard_and_daylight_time(self):
+        self.assertEqual(
+            format_central_timestamp("2026-01-15T12:00:00+00:00"),
+            "2026-01-15 06:00:00 AM CST",
+        )
+        self.assertEqual(
+            format_central_timestamp("2026-07-15T12:00:00Z"),
+            "2026-07-15 07:00:00 AM CDT",
         )
 
     def test_create_order_rejects_addons_for_non_coffee_drinks(self):

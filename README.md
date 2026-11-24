@@ -55,9 +55,14 @@ same durable order records; do not start `api_server.py` for that mode. Without
 Supabase credentials, both clients use the local API and `orders.csv`. The
 public page shows anonymous popular item combinations, while full customer
 order details remain private to the restaurant. The console displays the 20
-most recent customer orders.
+most recent customer orders. The Streamlit order currently being assembled
+is kept in `st.session_state` across reruns; placing an order saves it to
+Supabase (or the local API in development), so it remains available after the
+browser session ends.
 
 Menu items without a listed price cannot be ordered. The page calculates
-Woodstock sales tax at 8.75%.
+Woodstock sales tax at 8.75%. Order timestamps are timezone-aware and displayed
+in the `America/Chicago` time zone (CST/CDT); Supabase may return the same
+instants in UTC, which the console converts for display.
 
 Run the tests with `python -m unittest discover -s tests`.

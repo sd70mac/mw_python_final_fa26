@@ -3,7 +3,7 @@
 import sys
 
 from api_client import get_menu, get_orders, submit_order
-from restaurant import calculate_order_total
+from restaurant import calculate_order_total, format_central_timestamp
 
 
 def show_recent_orders(orders):
@@ -23,7 +23,8 @@ def show_recent_orders(orders):
             )
             for item in order["items"]
         )
-        print(f"  {order['customer_name']}: {items} ({order['timestamp']})")
+        order_time = format_central_timestamp(order["timestamp"])
+        print(f"  {order['customer_name']}: {items} ({order_time})")
 
 
 def choose_items(menu):

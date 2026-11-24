@@ -17,6 +17,15 @@ from restaurant import calculate_order_total, menu_item_details
 # - Keeps customer order history private to the restaurant console.
 
 BEVERAGES_WITH_ADDONS = {"tea", "coffee", "decaf"}
+CART_WIDGET_PREFIXES = ("selected_", "quantity_", "milk_", "sugar_")
+
+
+def clear_order_cart():
+    """Clear the session cart and its Streamlit widget values."""
+    for key in list(st.session_state):
+        if key.startswith(CART_WIDGET_PREFIXES):
+            del st.session_state[key]
+    st.session_state["order_cart"] = []
 
 
 def format_menu_item(item):
@@ -92,6 +101,13 @@ st.set_page_config(page_title="Pie in the Sky", page_icon="PI", layout="wide")
 st.title("Pie in the Sky Ordering Kiosk")
 st.caption("A neighborhood restaurant in Woodstock, Illinois")
 
+if "order_cart" not in st.session_state:
+    st.session_state["order_cart"] = []
+if st.session_state.pop("reset_order_widgets", False):
+    clear_order_cart()
+if "last_order_id" in st.session_state:
+    st.success(f"Order received. Your order number is {st.session_state['last_order_id']}.")
+
 try:
     supabase_url = st.secrets["SUPABASE_URL"]
     supabase_secret_key = st.secrets["SUPABASE_SECRET_KEY"]
@@ -128,7 +144,9 @@ with st.expander("View Menu", expanded=False):
             st.write(f"- {format_menu_item(item)}")
 
 st.subheader("Choose Items")
-selected_items = selected_menu_items(menu)
+st.button("Clear order", on_click=clear_order_cart)
+st.session_state["order_cart"] = selected_menu_items(menu)
+selected_items = st.session_state["order_cart"]
 
 st.subheader("Full Order")
 if selected_items:
@@ -159,8 +177,9 @@ if st.button(
     except (RuntimeError, ValueError) as error:
         st.error(f"Could not place order: {error}")
     else:
-        st.success(f"Order received. Your order number is {order['order_id'][:8]}.")
-        st.balloons()
+        st.session_state["last_order_id"] = order["order_id"][:8]
+        st.session_state["reset_order_widgets"] = True
+        st.rerun()
 
 st.subheader("Popular Orders")
 st.caption(

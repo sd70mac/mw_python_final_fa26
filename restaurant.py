@@ -8,6 +8,7 @@ import uuid
 from datetime import datetime, timezone
 from decimal import Decimal, ROUND_HALF_UP
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 
 PROJECT_DIR = Path(__file__).resolve().parent
@@ -15,6 +16,24 @@ MENU_FILES = (PROJECT_DIR / "menu.txt", PROJECT_DIR / "dessert_menu.txt")
 ORDERS_FILE = PROJECT_DIR / "orders.csv"
 
 _ORDERS_LOCK = threading.Lock()
+CENTRAL_TIME = ZoneInfo("America/Chicago")
+
+
+def format_central_timestamp(timestamp):
+    """Format an ISO timestamp in Woodstock's Central time zone."""
+    if not isinstance(timestamp, str):
+        raise ValueError("Timestamp must be an ISO-formatted string.")
+
+    try:
+        parsed_timestamp = datetime.fromisoformat(timestamp.replace("Z", "+00:00"))
+    except ValueError as error:
+        raise ValueError("Timestamp must be an ISO-formatted string.") from error
+
+    if parsed_timestamp.tzinfo is None:
+        parsed_timestamp = parsed_timestamp.replace(tzinfo=timezone.utc)
+    return parsed_timestamp.astimezone(CENTRAL_TIME).strftime(
+        "%Y-%m-%d %I:%M:%S %p %Z"
+    )
 
 
 def menu_item_details(item):
@@ -125,7 +144,7 @@ def prepare_order(customer_name, selected_items, menu):
 
     order = {
         "order_id": str(uuid.uuid4()),
-        "timestamp": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "timestamp": datetime.now(CENTRAL_TIME).isoformat(timespec="seconds"),
         "customer_name": customer_name,
         "items": items,
     }
