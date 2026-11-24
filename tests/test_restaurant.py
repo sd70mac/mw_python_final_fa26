@@ -126,7 +126,7 @@ class RestaurantTests(unittest.TestCase):
         )
 
         timestamp = datetime.fromisoformat(order["timestamp"])
-        self.assertEqual(timestamp.tzinfo, CENTRAL_TIME)
+        self.assertEqual(timestamp.utcoffset(), datetime.now(CENTRAL_TIME).utcoffset())
 
     def test_format_central_timestamp_handles_standard_and_daylight_time(self):
         self.assertEqual(
