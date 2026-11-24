@@ -19,26 +19,35 @@ development.
 
 ## Host the web app and share orders
 
-1. Create a Supabase project and run [`supabase_schema.sql`](./supabase_schema.sql)
-   in its SQL Editor.
-2. In Streamlit Community Cloud, select this repository, branch `main`, and
+1. Create a Supabase project on the Free plan.
+2. In Supabase **Project Settings → Integrations → GitHub Integration**, use
+   this repository and set **Working directory** to `.` (the `supabase/` folder
+   is at the repository root). Turn on **Deploy to production** and use the
+   existing GitHub branch `main` as the production branch. Do not enable preview
+   branching; that is the Pro feature shown in the screenshot.
+3. The schema migration is
+   [`20261124005000_create_orders.sql`](./supabase/migrations/20261124005000_create_orders.sql).
+   Push it to GitHub `main`; Supabase will apply pending migrations to the
+   production project. Alternatively, paste that file into the Supabase SQL
+   Editor and run it manually.
+4. In Streamlit Community Cloud, select this repository, branch `main`, and
    set **Main file path** to `streamlit_app.py` (not `main.py`).
-3. In the app's Streamlit Cloud settings, add these secrets:
+5. In the app's Streamlit Cloud settings, add these secrets:
 
    ```toml
    SUPABASE_URL = "https://your-project.supabase.co"
    SUPABASE_SECRET_KEY = "sb_secret_..."
    ```
 
-4. Keep the Supabase secret key private. Do not commit it or put it in
+6. Keep the Supabase secret key private. Do not commit it or put it in
    browser-side code. The app uses it only in the Streamlit server runtime.
-5. To let local Streamlit use the same hosted orders, create the ignored file
+7. To let local Streamlit use the same hosted orders, create the ignored file
    `.streamlit/secrets.toml` with the same two TOML entries shown above.
-6. To let the console use the same hosted orders, set `PIE_SUPABASE_URL` and
+8. To let the console use the same hosted orders, set `PIE_SUPABASE_URL` and
    `PIE_SUPABASE_KEY` in the console's local environment to the same project
    URL and secret key. Do not set these variables in the public GitHub
    repository.
-7. Push the latest code and menu files to the selected GitHub branch so
+9. Push the latest app code and menu files to the selected GitHub branch so
    Streamlit Cloud deploys the current version.
 
 With Supabase configured, the Streamlit app and console read and write the
