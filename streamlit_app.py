@@ -94,17 +94,15 @@ st.caption("A neighborhood restaurant in Woodstock, Illinois")
 
 try:
     supabase_url = st.secrets["SUPABASE_URL"]
-    supabase_service_role_key = st.secrets["SUPABASE_SERVICE_ROLE_KEY"]
+    supabase_secret_key = st.secrets["SUPABASE_SECRET_KEY"]
 except StreamlitSecretNotFoundError:
     pass
 except KeyError:
-    st.error(
-        "Configure SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY in Streamlit secrets."
-    )
+    st.error("Configure SUPABASE_URL and SUPABASE_SECRET_KEY in Streamlit secrets.")
     st.stop()
 else:
     try:
-        configure_supabase(supabase_url, supabase_service_role_key)
+        configure_supabase(supabase_url, supabase_secret_key)
     except ValueError as error:
         st.error(f"Invalid Supabase configuration: {error}")
         st.stop()

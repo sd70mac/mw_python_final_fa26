@@ -25,7 +25,7 @@ class SupabaseClientTests(unittest.TestCase):
         self.original_key = api_client._SUPABASE_KEY
         api_client.configure_supabase(
             "https://restaurant-test.supabase.co",
-            "test-service-role-key",
+            "sb_secret_test-key",
         )
 
     def tearDown(self):
@@ -60,7 +60,7 @@ class SupabaseClientTests(unittest.TestCase):
         self.assertEqual(request.method, "POST")
         self.assertEqual(
             request.get_header("Authorization"),
-            "Bearer test-service-role-key",
+            "Bearer sb_secret_test-key",
         )
         self.assertTrue(request.full_url.endswith("/rest/v1/orders"))
         self.assertEqual(
@@ -91,7 +91,7 @@ class SupabaseClientTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "HTTPS"):
             api_client.configure_supabase(
                 "http://restaurant-test.supabase.co",
-                "test-service-role-key",
+                "sb_secret_test-key",
             )
 
 

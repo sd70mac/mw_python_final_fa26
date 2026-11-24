@@ -18,22 +18,22 @@ _ORDERS_QUERY = (
 )
 
 
-def configure_supabase(url, service_role_key):
+def configure_supabase(url, secret_key):
     """Configure the hosted database using server-side credentials."""
     global _SUPABASE_URL, _SUPABASE_KEY
 
-    if not isinstance(url, str) or not isinstance(service_role_key, str):
-        raise ValueError("Supabase URL and service role key must be strings.")
+    if not isinstance(url, str) or not isinstance(secret_key, str):
+        raise ValueError("Supabase URL and secret key must be strings.")
     url = url.strip().rstrip("/")
-    service_role_key = service_role_key.strip()
+    secret_key = secret_key.strip()
     parsed_url = urlparse(url)
     if parsed_url.scheme != "https" or not parsed_url.netloc:
         raise ValueError("Supabase URL must be an HTTPS URL.")
-    if not service_role_key:
-        raise ValueError("Supabase service role key cannot be empty.")
+    if not secret_key:
+        raise ValueError("Supabase secret key cannot be empty.")
 
     _SUPABASE_URL = url
-    _SUPABASE_KEY = service_role_key
+    _SUPABASE_KEY = secret_key
 
 
 def _supabase_is_configured():

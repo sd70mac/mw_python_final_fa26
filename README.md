@@ -27,16 +27,16 @@ development.
 
    ```toml
    SUPABASE_URL = "https://your-project.supabase.co"
-   SUPABASE_SERVICE_ROLE_KEY = "your-service-role-key"
+   SUPABASE_SECRET_KEY = "sb_secret_..."
    ```
 
-4. Keep the Supabase service-role key private. Do not commit it or put it in
+4. Keep the Supabase secret key private. Do not commit it or put it in
    browser-side code. The app uses it only in the Streamlit server runtime.
 5. To let local Streamlit use the same hosted orders, create the ignored file
    `.streamlit/secrets.toml` with the same two TOML entries shown above.
 6. To let the console use the same hosted orders, set `PIE_SUPABASE_URL` and
    `PIE_SUPABASE_KEY` in the console's local environment to the same project
-   URL and service-role key. Do not set these variables in the public GitHub
+   URL and secret key. Do not set these variables in the public GitHub
    repository.
 7. Push the latest code and menu files to the selected GitHub branch so
    Streamlit Cloud deploys the current version.
